@@ -20,7 +20,9 @@ public class Driver {
 		driverHistory = new ArrayList<CityLocation>();
 	}
 	
+	// moves to specific location
 	public CityLocation move(CityLocation nextLocation){
+		
 		if(!finished){
 			
 			driverHistory.add(current);
@@ -38,6 +40,8 @@ public class Driver {
 		
 		if (!finished){
 			
+			
+				
 			driverHistory.add(current);
 			
 			
@@ -56,6 +60,9 @@ public class Driver {
 			
 			ArrayList<CityLocation> pLocations = Navigator.getPossibleLocation(current, city);
 			
+			int index = r.nextInt(pLocations.size());
+			
+			move(pLocations.get(index));
 			
 			
 		}
@@ -68,11 +75,16 @@ public class Driver {
 		return driverHistory;
 	}
 	
+	// if current location is not in the city then will set finished to true. This should not be called unless after a successful move.  
 	private void checkAndSetFinished(){
 		finished = finished || ! current.inCity() ;
 	}
 	
-	public boolean isFInished(){
+	public boolean isFinished(){
 		return finished;
+	}
+	
+	public int getNumber(){
+		return num;
 	}
 }

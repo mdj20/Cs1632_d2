@@ -8,35 +8,19 @@ public class CityLayout {
 	
 	
 	
-	CityLayout(int x, int y, ArrayList<String> layout, ArrayList<Street> inRoads){
+	CityLayout(int x, int y, ArrayList<CityLocation> layout, ArrayList<Street> inRoads){
 		
 		
 		cityMatrix = new CityLocation[x][y];
-		String tempLoc = layout.get(0);
-		roads = inRoads;
 		
-		for(int i = 0 ; i < x ; i++ ){
-		
-			for(int j = 0 ; j < y ; j++ ){
-			cityMatrix[x][y] = new CityLocation(tempLoc,i,j);
-				
-			}
+		for (CityLocation cl : layout){
+			cityMatrix[cl.x()][cl.y()] = cl;
 		}
 		
-	}
-	
-	public ArrayList<CityLocation> getPossibleLocations(CityLocation inLoc){
-	
-		ArrayList possible = new ArrayList<CityLocation>();
-		
-		
-		
-		ArrayList mockLocation = new ArrayList<CityLocation>();
-		mockLocation.add(new CityLocation("MOCK LOCATION", 0 , 0));
-		return  mockLocation;
+		roads = inRoads;
 		
 	}
-	
+			
 	public ArrayList<Street> roads(){
 		return roads;
 	}
