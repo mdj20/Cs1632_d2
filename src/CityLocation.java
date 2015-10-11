@@ -4,12 +4,14 @@ public class CityLocation {
 	private String name;
 	private int x;
 	private int y;
+	private boolean inCity;
 	
 	
-	CityLocation(String inName, int x0, int y0){		
+	CityLocation(String inName, int x0, int y0, boolean in){		
 		name = inName;
 		x = x0;
 		y = y0;
+		inCity = in;
 	}
 	
 	public int x(){
@@ -25,6 +27,8 @@ public class CityLocation {
 	}
 
 	
-	
+	public boolean inCity(){
+		return inCity;
+	}
 	
 }

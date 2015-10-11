@@ -39,7 +39,7 @@ public class Street {
 		return flow;
 	}
 
-	
+
 	
 		
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Navigator {
 
 	//
-	public static ArrayList<CityLocation> getPossibleLocation(CityLocation initial, City city){
+	public static ArrayList<CityLocation> getPossibleLocation(CityLocation initial, CityLayout city){
 		
 		// allocate return locations
 		ArrayList<CityLocation> returnLocations = new ArrayList<CityLocation>();
@@ -17,7 +17,7 @@ public class Navigator {
 		
 		for (Street s : onRoads){
 		
-			
+			returnLocations.addAll(getPossibleLocations(initial,s,city));
 			
 		}
 		
@@ -30,7 +30,7 @@ public class Navigator {
 	}
 	
 	//returns list of roads available at the provided location
-	private static ArrayList<Street> roadsAtIntersection(int x, int y, City city){
+	private static ArrayList<Street> roadsAtIntersection(int x, int y, CityLayout city){
 		
 		ArrayList<Street> retStreets = new ArrayList<Street>();
 		for (Street s : city.roads()){
@@ -64,41 +64,83 @@ public class Navigator {
 		
 	}
 	
-	
-	private static ArrayList<CityLocation> getPossibleLocations(CityLocation location, ArrayList<Street> roads){
+	// method returns ArrayList of CityLocation(s) that will describe the possible moves a driver can make
+	// NOTE: this will return all locations on the road(s) that the driver is currently one, regardless of distance on particular road.
+	private static ArrayList<CityLocation> getPossibleLocations(CityLocation location, Street road, CityLayout city){
 		
 		// final returned list of possible locations
-		ArrayList<CityLocation> retLocarions = new ArrayList<CityLocation>();
+		ArrayList<CityLocation> retLocations = new ArrayList<CityLocation>();
 		
 		
-		// 
-		for (Street s : roads){
+		// Street is NorthSouth
+		if (road.x() == road.x1()){
 			
-		if (s.x() == s.x1()){
+			// Negative one way or bidirectional
+			if ( road.flow() <= 0  ){
 			
-			if(s.flow())
+				// Iterate down road and collect possible destinations 
+				for (int i = road.x() ; i < location.x() ; i++ ){
+					
+					if(city.locationAt(i, location.y())){
+						retLocations.add(city.getLocationAt(i, location.y()));
+					}
+					
+				}
+					
 			
+			}
+
+			// Positive one way or bidirectional
+			if ( road.flow() >= 0  ){
 			
-			
-			
-			
-			
-			
-			
+				// iterate down road and collect possible destinations 
+				for (int i = location.x() ; i < road.x1() ; i++ ){
+					
+					if(city.locationAt(i, location.y())){
+						retLocations.add(city.getLocationAt(i, location.y()));
+					}
+					
+				}
+				
+				
+				
+			}	
 		}
+		else{
 			
+			if ( road.flow() <= 0  ){
+				
+				// Iterate down road and collect possible destinations 
+				for (int i = road.y() ; i < location.y() ; i++ ){
+					
+					if(city.locationAt(i, location.x())){
+						retLocations.add(city.getLocationAt(i, location.x()));
+					}
+					
+				}
+					
 			
+			}
+
+			// Positive one way or bidirectional
+			if ( road.flow() >= 0  ){
 			
+				// iterate down road and collect possible destinations 
+				for (int i = location.y() ; i < road.y1() ; i++ ){
+					
+					if(city.locationAt(i, location.x())){
+						retLocations.add(city.getLocationAt(i, location.x()));
+					}
+					
+				}
+				
+				
+				
+			}	
+							
+		}				
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		}
+		return retLocations;
+	
 	}
 }
