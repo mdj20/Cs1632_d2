@@ -4,14 +4,14 @@ import java.util.Random;
 
 public class Driver {
 	
-	private int num;
-	private CityLocation current;
-	private boolean finished;
-	private CityLayout city;
-	private ArrayList<CityLocation> driverHistory;
+	private int num;  // Driver number ID
+	private CityLocation current;  // location of driver 
+	private boolean finished; // driver is finished 
+	private CityLayout city;  /// city info pointer 
+	private ArrayList<CityLocation> driverHistory;  // driver history
 	
 	
-	Driver(int inNum, CityLayout inCity, CityLocation initialLocation){
+	Driver(int inNum, CityLayout inCity, CityLocation initialLocation){	
 		
 		city = inCity;
 		num = inNum;
@@ -26,10 +26,9 @@ public class Driver {
 		if(!finished){
 			
 			driverHistory.add(current);
-			
 			current= nextLocation;
+			
 		}
-		
 		
 		checkAndSetFinished();
 		return current;
@@ -40,12 +39,7 @@ public class Driver {
 		
 		if (!finished){
 			
-			
-				
 			driverHistory.add(current);
-			
-			
-			
 			
 		}
 		
@@ -53,17 +47,14 @@ public class Driver {
 		return current;
 	}
 	
-	// driver moves to any avalible spot on current streets
+	// driver moves to any available spot on current streets
 	public CityLocation moveRandom(Random r ){
 		
 		if (!finished){
 			
 			ArrayList<CityLocation> pLocations = Navigator.getPossibleLocation(current, city);
-			
 			int index = r.nextInt(pLocations.size());
-			
 			move(pLocations.get(index));
-			
 			
 		}
 		
@@ -87,4 +78,5 @@ public class Driver {
 	public int getNumber(){
 		return num;
 	}
+	
 }
