@@ -17,12 +17,15 @@ public class Cs1632_d2 {
 		
 		
 		
-		System.out.println("ret:"+Navigator.getPossibleLocation(city.getLocationAt(0, 0), city).size());
+		System.out.println("ret:"+Navigator.getAllPossibleLocations(city.getLocationAt(0, 0), city).size());
 	
-		/*
-		Driver d0 = new Driver(0,city,city.getRandomSpawnPpoint(r));
-		Driver d1 = new Driver(1,city,city.getRandomSpawnPpoint(r));
-		Driver d2 = new Driver(2,city,city.getRandomSpawnPpoint(r));
+		DataDefault.addSpawnPoints(city, locations);
+		
+		
+		
+		Driver d0 = new Driver(0,city,city.getRandomSpawnPoint(r));
+		Driver d1 = new Driver(1,city,city.getRandomSpawnPoint(r));
+		Driver d2 = new Driver(2,city,city.getRandomSpawnPoint(r));
 		
 		ArrayList<Driver> drivers = new ArrayList<Driver>();
 		drivers.add(d0);
@@ -37,8 +40,7 @@ public class Cs1632_d2 {
 			for(Driver d : drivers){
 				
 				if (! d.isFinished())
-					d.moveRandom(r);
-		
+					d.moveOneRand(r);
 				}
 			
 			running = false;
@@ -47,15 +49,26 @@ public class Cs1632_d2 {
 				
 				running = ! d.isFinished() || running;
 		
-			}
+		}
 			
+			
+		for(Driver d : drivers){
+			
+			ArrayList<HistoryEntry> entry = d.getDriverHistory();
+			
+			System.out.println(entry.size());
+			
+			for(HistoryEntry he: entry){
+				System.out.println(he.driver().getNumber()+" "+he.destination().name()+" "+he.street().name());
+			}
 			
 			
 		}
 		
-		*/
-		
-	}
+			
+			
+		}// end Main	
+	} // end class
 	
 
 	

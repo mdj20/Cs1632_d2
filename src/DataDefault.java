@@ -39,15 +39,17 @@ public class DataDefault {
 		
 		boolean result = true;
 		
-		result = city.addSpawnPoint(0,0);
-		result = city.addSpawnPoint(1,0);
-		result = city.addSpawnPoint(2,0);
-		result = city.addSpawnPoint(1,1);
-		result = city.addSpawnPoint(2,1);
-		result = city.addSpawnPoint(3,1);
+		city.addSpawnPoint(0,0);
+		city.addSpawnPoint(1,0);
+		city.addSpawnPoint(2,0);
+		city.addSpawnPoint(1,1);
+		city.addSpawnPoint(2,1);
+		city.addSpawnPoint(3,1);
 		
 		return result;
 		
 	}
+	
+	
 	
 }

@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Random;
+import java.util.Set;
 
 
 public class Driver {
@@ -8,7 +11,7 @@ public class Driver {
 	private CityLocation current;  // location of driver 
 	private boolean finished; // driver is finished 
 	private CityLayout city;  /// city info pointer 
-	private ArrayList<CityLocation> driverHistory;  // driver history
+	private ArrayList<HistoryEntry> driverHistory;  // driver history
 	
 	
 	Driver(int inNum, CityLayout inCity, CityLocation initialLocation){	
@@ -17,52 +20,65 @@ public class Driver {
 		num = inNum;
 		finished = false;
 		current = initialLocation;
-		driverHistory = new ArrayList<CityLocation>();
+		driverHistory = new ArrayList<HistoryEntry>();
 	}
 	
 	// moves to specific location
-	public CityLocation move(CityLocation nextLocation){
+	public CityLocation move(CityLocation dest, Street via){
 		
 		if(!finished){
-			
-			driverHistory.add(current);
-			current= nextLocation;
+			driverHistory.add(new HistoryEntry(this,current,via,dest,new Date()));
+			this.current = dest;
 			
 		}
-		
 		checkAndSetFinished();
-		return current;
+		return this.current;
 	}
 	
 	//moves the driver one spot away 
 	public CityLocation moveOneRand(Random r){
 		
 		if (!finished){
-			
-			driverHistory.add(current);
-			
+			LinkedHashMap<Street, ArrayList<CityLocation>> roadsAndLocations = Navigator.getNextPossibleLocations(current, city);
+		
+			ArrayList<Street> keys = new ArrayList<Street>(roadsAndLocations.keySet());
+		
+			Street via = keys.get(r.nextInt(keys.size()));
+			ArrayList<CityLocation> locations = roadsAndLocations.get(via);
+	
+			CityLocation dest = locations.get(r.nextInt(locations.size()));
+		
+			return move(dest,via);
+		}
+		else{
+			return current;
 		}
 		
-		checkAndSetFinished();
-		return current;
 	}
-	
+		
 	// driver moves to any available spot on current streets
 	public CityLocation moveRandom(Random r ){
 		
 		if (!finished){
 			
-			ArrayList<CityLocation> pLocations = Navigator.getPossibleLocation(current, city);
-			int index = r.nextInt(pLocations.size());
-			move(pLocations.get(index));
+			LinkedHashMap<Street, ArrayList<CityLocation>> roadsAndLocations = Navigator.getAllPossibleLocations(current, city);
+			
+			ArrayList<Street> keys = new ArrayList<Street>(roadsAndLocations.keySet());
+			
+			Street via = keys.get(r.nextInt(keys.size()));
+			ArrayList<CityLocation> locations = roadsAndLocations.get(via);
+			
+			CityLocation dest = locations.get(r.nextInt(locations.size()));
+
+			return move(dest,via);
 			
 		}
-		
-		checkAndSetFinished();
-		return current;
+		else{
+			return current;
+		}
 	}
 	
-	public ArrayList<CityLocation> getDriverHistory(){
+	public ArrayList<HistoryEntry> getDriverHistory(){
 		return driverHistory;
 	}
 	
@@ -71,12 +87,17 @@ public class Driver {
 		finished = finished || ! current.inCity() ;
 	}
 	
+	
 	public boolean isFinished(){
 		return finished;
 	}
 	
 	public int getNumber(){
 		return num;
+	}
+	
+	public CityLocation current(){
+		return current;
 	}
 	
 }

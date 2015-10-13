@@ -6,24 +6,34 @@ public class CityLayout {
 	
 	// building location
 	private CityLocation[][] cityMatrix;
+	private ArrayList<CityLocation> locationList;
 	
 	//street info in an edge list
 	private ArrayList<Street> roads;
 	
 	//spawn locations
-	public ArrayList<CityLocation> sLoc;
+	private ArrayList<CityLocation> sLoc;
 	
 	CityLayout(int x, int y, ArrayList<CityLocation> layout, ArrayList<Street> inRoads){
 		
-		
+		// initialize city grid
 		cityMatrix = new CityLocation[x][y];
+		
+		//initialize spawn points
 		sLoc = new ArrayList<CityLocation>();
 		
-		for (CityLocation cl : layout){
+		//initlize new location list
+		locationList = new ArrayList<CityLocation>(layout);
+		
+		//init new road list
+		roads = new ArrayList<Street>(inRoads);
+		
+		// place 
+		for (CityLocation cl : locationList){
 			cityMatrix[cl.x()][cl.y()] = cl;
 		}
 		
-		roads = inRoads;
+
 		
 	}
 			
@@ -50,28 +60,30 @@ public class CityLayout {
 		
 	}
 	
-	public boolean addSpawnPoint(int x, int y){
+	// adds spawn point to city map, returns null if x/y don't describe valid point
+	public CityLocation addSpawnPoint(int x, int y){
 		
-		boolean result = false;
+		CityLocation retLocation = null;
 		
 		// checks for valid location
 		if (locationAt(x,y)){
 		
 			// checks if spawn point isn't set already, and has a valid exit.
-			if ( ! sLoc.contains(getLocationAt(x,y)) && ( Navigator.getPossibleLocation( getLocationAt(x, y), this ).size() >0 )   ){
+			if ( ! sLoc.contains(getLocationAt(x,y)) ){
 			
 				sLoc.add(getLocationAt(x,y));
-				result = true;
-			
+				
+				retLocation = getLocationAt(x,y);
+				
 			}
 		
 		}
 		
-		return result;
+		return retLocation;
 	}
 	
 	// returns random spawn point/ requires Random
-	public CityLocation getRandomSpawnPpoint(Random r){
+	public CityLocation getRandomSpawnPoint(Random r){
 		
 		return sLoc.get(r.nextInt(sLoc.size()));
 		
@@ -79,6 +91,14 @@ public class CityLayout {
 	
 	public int getNumSpawnPoints(){
 		return sLoc.size();
+	}
+	
+	public ArrayList<CityLocation> spawnPoints(){
+		return sLoc;
+	}
+	
+	public ArrayList<CityLocation> locationList(){
+		return locationList;
 	}
 	
 }

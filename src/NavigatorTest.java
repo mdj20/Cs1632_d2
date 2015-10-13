@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -14,7 +15,6 @@ public class NavigatorTest {
 	static ArrayList<Street> streets; 
 	
 	// Sets up required dependencies
-	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	
@@ -35,10 +35,13 @@ public class NavigatorTest {
 		fail("Not yet implemented");
 	}
 
+	
+	// test will verify that each location will allow for the correct number of possible moves.
+	// (move to any spot along streets, driver is currently on)
 	@Test
-	public void testNumberPossibleLocations(){
+	public void testNumberAllPossibleLocations(){
 		
-		ArrayList<CityLocation> retLocations =  Navigator.getPossibleLocation( locations.get(7), testCity);
+		LinkedHashMap<Street,ArrayList<CityLocation>> retLocations =  Navigator.getAllPossibleLocations( locations.get(7), testCity);
 		
 		ArrayList<CityLocation> varLocations = new ArrayList<CityLocation>();
 		varLocations.add(locations.get(4));
@@ -53,9 +56,28 @@ public class NavigatorTest {
 		
 		assertEquals(retLocations,varLocations);
 		
-		//assertTrue(retLocations.size()==3);
-		
+				
 		
 	}
 	
+	// Test will verify that each location will allow for the correct number of possible 
+	// moves (one space away). 
+	
+	@Test
+	public void testNumberNextPossibleLocations(){
+	
+		int testInts[] ={1,2,2,0,0,2,2,1};
+		int retVal[] = new int[8];
+	
+		int index = 0;
+	
+		for (CityLocation cl : testCity.locationList()){
+			
+			ArrayList<CityLocation> retLocations =  Navigator.getNextPossibleLocations( cl, testCity);
+			retVal[index++] = retLocations.size();
+		}
+				
+		assertArrayEquals(retVal,testInts);
+		
+	}
 }

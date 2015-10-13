@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -12,6 +13,7 @@ public class CityLayoutTest {
 	static CityLayout testCity;
 	static ArrayList<CityLocation> locations;
 	static ArrayList<Street> streets; 
+	static Random testR;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -19,7 +21,8 @@ public class CityLayoutTest {
 		
 		locations = DataDefault.defaultCityLocInfo();
 		streets = DataDefault.defaultStreetInfo();		
-		testCity = new CityLayout(DataDefault.x,DataDefault.y,locations,streets);	
+		testCity = new CityLayout(DataDefault.x,DataDefault.y,locations,streets);
+		testR = new Random(System.nanoTime());
 		DataDefault.addSpawnPoints(testCity, locations);
 	}
 
@@ -73,6 +76,24 @@ public class CityLayoutTest {
 		
 		
 		assertArrayEquals(expected.toArray(),actual.toArray());
+		
+	}
+	
+	
+	@Test
+	public void testGetRandomSpawnPoint(){
+		
+		ArrayList<CityLocation> expected = new ArrayList<CityLocation>();
+		
+		expected = testCity.spawnPoints();
+		
+		boolean missed = false;
+		
+		for (int i = 0 ; i <100 ; i ++){
+			missed = missed || !(expected.contains(testCity.getRandomSpawnPoint(testR)));
+		}
+		
+		assertTrue(!missed);
 		
 	}
 	

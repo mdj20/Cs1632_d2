@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 
 // This class will house the location searching algorithm
@@ -7,21 +8,21 @@ import java.util.ArrayList;
 public class Navigator {
 
 	//
-	public static ArrayList<CityLocation> getPossibleLocation(CityLocation initial, CityLayout city){
+	public static LinkedHashMap<Street,ArrayList<CityLocation>> getAllPossibleLocations(CityLocation initial, CityLayout city){
 		
-		// allocate return locations
-		ArrayList<CityLocation> returnLocations = new ArrayList<CityLocation>();
+		// return value container
+		LinkedHashMap<Street,ArrayList<CityLocation>> returnLocations = new LinkedHashMap<Street,ArrayList<CityLocation>>();
 		
 		// list of roads that intersect current location
 		ArrayList<Street> onRoads = roadsAtIntersection(initial.x(),initial.y(),city);
 		
-		
-		
 		for (Street s : onRoads){
 		
-			//System.out.println("st name :" + s.name() );
+			ArrayList<CityLocation> temp = getAllLocationsOnRoad(initial,s,city);
 			
-			returnLocations.addAll(getLocationsOnRoad(initial,s,city));
+			if (temp.size() > 0){
+				returnLocations.put(s, temp);
+			}
 			
 		}
 		
@@ -29,6 +30,28 @@ public class Navigator {
 		
 		
 	}
+	
+	
+	public static LinkedHashMap<Street,ArrayList<CityLocation>> getNextPossibleLocations(CityLocation initial, CityLayout city){
+		
+		LinkedHashMap<Street,ArrayList<CityLocation> > returnLocations = new LinkedHashMap<Street,ArrayList<CityLocation> >();
+	
+		
+		ArrayList<Street> onRoads = roadsAtIntersection(initial.x(),initial.y(),city); 
+		
+		for (Street s : onRoads){
+			
+			ArrayList<CityLocation> temp = getAllLocationsOnRoad(initial,s,city);
+			
+			if (temp.size() > 0){
+				returnLocations.put(s, temp);
+			}
+			
+		}
+		
+		return returnLocations;
+	}
+	
 	
 	//returns list of roads available at the provided location
 	private static ArrayList<Street> roadsAtIntersection(int x, int y, CityLayout city){
@@ -76,7 +99,7 @@ public class Navigator {
 	
 	// method returns ArrayList of CityLocation(s) that will describe the possible moves a driver can make
 	// NOTE: this will return all locations on the road(s) that the driver is currently one, regardless of distance on particular road.
-	private static ArrayList<CityLocation> getLocationsOnRoad(CityLocation location, Street road, CityLayout city){
+	private static ArrayList<CityLocation> getAllLocationsOnRoad(CityLocation location, Street road, CityLayout city){
 		
 		// final returned list of possible locations
 		ArrayList<CityLocation> retLocations = new ArrayList<CityLocation>();
@@ -117,6 +140,8 @@ public class Navigator {
 				
 			}	
 		}
+		
+		// road is 
 		else if (road.y() == road.y1()){
 			
 			if ( road.flow() <= 0  ){
@@ -154,4 +179,92 @@ public class Navigator {
 		return retLocations;
 	
 	}
+	
+	private static ArrayList<CityLocation> getNextLocationsOnRoad(CityLocation location,Street road, CityLayout city){
+		
+		ArrayList<CityLocation> retLocations = new ArrayList<CityLocation>();
+		
+		// if north/south 
+		
+		if(road.x() == road.x1()  && location.x() == road.x()){
+			
+			// negative direction
+			if(road.flow() <= 0 && road.y() < location.y()){
+				
+				int index = location.y()-1;
+				
+				while (! city.locationAt(road.x(), index) && index >= road.y() ){
+					
+					index--;
+				}
+				
+				if (city.locationAt(road.x(), index)){
+					retLocations.add(city.getLocationAt(road.x(), index));
+				}
+				
+			}	
+				
+		
+			
+			if (road.flow() >= 0 && road.y1() > location.y()){
+
+				int index = location.y()+1;
+				
+				while (! city.locationAt(road.x(), index) && index <= road.y1() ){
+					
+					index++;
+				}
+				
+				if (city.locationAt(road.x(), index)){
+					retLocations.add(city.getLocationAt(road.x(), index));
+				}
+				
+				
+				
+			}
+		
+		}
+		// road is east west	
+		else if(road.y() == road.y1()  && location.y() == road.y()){
+				
+				// negative direction
+			if(road.flow() <= 0 && road.x() < location.x()){
+					
+				int index = location.x()-1;
+					
+				while (! city.locationAt(index, road.y()) && index >= road.x() ){
+						
+					index--;
+				}
+					
+				if (city.locationAt(index, road.y())){
+					retLocations.add(city.getLocationAt(index,road.y()));
+				}
+					
+					
+					
+			}
+			// 
+			if (road.flow() >= 0 && road.x1() > location.x()){
+
+				int index = location.x()+1;
+					
+				while (! city.locationAt(index,road.y()) && index <= road.x1() ){
+						
+					index++;
+				}
+					
+				if (city.locationAt(index,road.y())){
+					retLocations.add(city.getLocationAt(index,road.y()));
+				}
+							
+			}
+							
+		} // end east west search
+		
+		return retLocations;
+		
+	
+	}
+	
 }

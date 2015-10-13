@@ -4,15 +4,17 @@ import java.util.Date;
 public class HistoryEntry {
 	
 	private Driver driver;
+	private CityLocation leaving;
 	private Street street;
 	private CityLocation destination;
 	Date date;
 	
 	
-	HistoryEntry(Driver d, Street s, CityLocation cl, Date dt){
+	HistoryEntry(Driver d, CityLocation source, Street s, CityLocation sink, Date dt){
 		driver = d;
+		leaving = source;
 		street = s; 
-		destination = cl;
+		destination = sink;
 		date = dt;
 	}
 	
@@ -30,6 +32,10 @@ public class HistoryEntry {
 	
 	public Date date(){
 		return date;
+	}
+	
+	public CityLocation leaving(){
+		return leaving;
 	}
 
 }
