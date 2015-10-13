@@ -21,7 +21,7 @@ public class DriverTest {
 		
 		testLocations = DataDefault.defaultCityLocInfo();
 		testStreets = DataDefault.defaultStreetInfo();		
-		testCity = new CityLayout(DataDefault.x,DataDefault.y,testLocations,testStreets);	
+		testCity = new CityLayout(DataDefault.x(),DataDefault.y(),testLocations,testStreets);	
 		DataDefault.addSpawnPoints(testCity, testLocations);
 		
 		testR = new Random(System.nanoTime());

@@ -21,7 +21,7 @@ public class CityLayoutTest {
 		
 		locations = DataDefault.defaultCityLocInfo();
 		streets = DataDefault.defaultStreetInfo();		
-		testCity = new CityLayout(DataDefault.x,DataDefault.y,locations,streets);
+		testCity = new CityLayout(DataDefault.x(),DataDefault.y(),locations,streets);
 		testR = new Random(System.nanoTime());
 		DataDefault.addSpawnPoints(testCity, locations);
 	}

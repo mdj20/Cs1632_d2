@@ -57,6 +57,7 @@ public class NavigatorTest {
 			
 					varLocations.addAll(retLocations.get(s));
 			}
+			
 			actual[index++] = varLocations.size();
 		}
 		
