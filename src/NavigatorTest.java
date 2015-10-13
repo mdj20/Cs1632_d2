@@ -20,7 +20,7 @@ public class NavigatorTest {
 	
 		locations = DataDefault.defaultCityLocInfo();
 		streets = DataDefault.defaultStreetInfo();		
-		testCity = new CityLayout(DataDefault.x,DataDefault.y,locations,streets);	
+		testCity = new CityLayout(DataDefault.x(),DataDefault.y(),locations,streets);	
 		DataDefault.addSpawnPoints(testCity, locations);
 		
 	}
@@ -35,26 +35,32 @@ public class NavigatorTest {
 		fail("Not yet implemented");
 	}
 
+
 	
 	// test will verify that each location will allow for the correct number of possible moves.
 	// (move to any spot along streets, driver is currently on)
 	@Test
 	public void testNumberAllPossibleLocations(){
 		
-		LinkedHashMap<Street,ArrayList<CityLocation>> retLocations =  Navigator.getAllPossibleLocations( locations.get(7), testCity);
+		int expected[] = {3,3,2,0,0,2,3,3};
+		int actual[] = new int[expected.length];
 		
-		ArrayList<CityLocation> varLocations = new ArrayList<CityLocation>();
-		varLocations.add(locations.get(4));
-		varLocations.add(locations.get(5));
-		varLocations.add(locations.get(6));
+		int index = 0;
 		
-		System.out.println(retLocations.size());
-		for (CityLocation cl : retLocations){
-			System.out.println(cl.name()+" "+cl.x()+cl.y());
+		for(CityLocation cl : locations){
+			
+			LinkedHashMap<Street,ArrayList<CityLocation>> retLocations =  Navigator.getAllPossibleLocations( cl , testCity);
+		
+			ArrayList<CityLocation> varLocations = new ArrayList<CityLocation>();
+				
+			for (Street s : retLocations.keySet()){
+			
+					varLocations.addAll(retLocations.get(s));
+			}
+			actual[index++] = varLocations.size();
 		}
 		
-		
-		assertEquals(retLocations,varLocations);
+		assertArrayEquals(expected,actual);
 		
 				
 		
@@ -66,18 +72,29 @@ public class NavigatorTest {
 	@Test
 	public void testNumberNextPossibleLocations(){
 	
-		int testInts[] ={1,2,2,0,0,2,2,1};
-		int retVal[] = new int[8];
+		int expected[] ={1,2,2,0,0,2,2,1};
+		int actual[] = new int[8];
 	
 		int index = 0;
 	
 		for (CityLocation cl : testCity.locationList()){
 			
-			ArrayList<CityLocation> retLocations =  Navigator.getNextPossibleLocations( cl, testCity);
-			retVal[index++] = retLocations.size();
+			// locations in 
+			LinkedHashMap<Street,ArrayList<CityLocation>> retLocations =  Navigator.getNextPossibleLocations(cl, testCity);
+			
+			int temp = 0;
+			
+			for (Street s : retLocations.keySet()){
+				
+				System.out.println("Size: "+ retLocations.get(s).size());
+				temp += retLocations.get(s).size();
+			}
+			
+			System.out.println("ACT: "+ temp);
+			actual[index++] = temp;
 		}
 				
-		assertArrayEquals(retVal,testInts);
+		assertArrayEquals(expected,actual);
 		
 	}
 }

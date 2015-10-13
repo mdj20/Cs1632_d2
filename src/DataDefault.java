@@ -48,9 +48,9 @@ public class DataDefault {
 		return dloc;
 	}
 	
+	// adds spawn point to CityLayout that is passed in
 	public static void addSpawnPoints(CityLayout city, ArrayList<CityLocation> loc){
-		
-		
+			
 		city.addSpawnPoint(0,0);
 		city.addSpawnPoint(1,0);
 		city.addSpawnPoint(2,0);
@@ -67,7 +67,7 @@ public class DataDefault {
 		// get history entries from driver
 		ArrayList<HistoryEntry> history = d.getDriverHistory();
 		
-		// print each history out in format folowing example
+		// print each history out in format following example output
 		for (HistoryEntry h : history){
 			
 			System.out.println("Driver "+h.driver().getNumber()+" heading from "+h.leaving().name()
@@ -78,5 +78,7 @@ public class DataDefault {
 		
 		
 	}
+	
+	
 	
 }

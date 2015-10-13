@@ -41,7 +41,7 @@ public class Navigator {
 		
 		for (Street s : onRoads){
 			
-			ArrayList<CityLocation> temp = getAllLocationsOnRoad(initial,s,city);
+			ArrayList<CityLocation> temp = getNextLocationsOnRoad(initial,s,city);
 			
 			if (temp.size() > 0){
 				returnLocations.put(s, temp);
