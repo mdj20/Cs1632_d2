@@ -29,13 +29,6 @@ public class NavigatorTest {
 	public static void tearDownAfterClass() throws Exception {
 		
 	}
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-
-
 	
 	// test will verify that each location will allow for the correct number of possible moves.
 	// (move to any spot along streets, driver is currently on)
@@ -86,12 +79,10 @@ public class NavigatorTest {
 			int temp = 0;
 			
 			for (Street s : retLocations.keySet()){
-				
-				System.out.println("Size: "+ retLocations.get(s).size());
+			
 				temp += retLocations.get(s).size();
 			}
 			
-			System.out.println("ACT: "+ temp);
 			actual[index++] = temp;
 		}
 				

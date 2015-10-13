@@ -2,14 +2,14 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 public class CityLayoutTest {
 	
+	
+	// data required
 	static CityLayout testCity;
 	static ArrayList<CityLocation> locations;
 	static ArrayList<Street> streets; 
@@ -18,7 +18,7 @@ public class CityLayoutTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
-		
+		// set up data
 		locations = DataDefault.defaultCityLocInfo();
 		streets = DataDefault.defaultStreetInfo();		
 		testCity = new CityLayout(DataDefault.x(),DataDefault.y(),locations,streets);
@@ -26,15 +26,9 @@ public class CityLayoutTest {
 		DataDefault.addSpawnPoints(testCity, locations);
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 	
+	//custom test
 	@Test
 	public void testMatrixAcuracy() {
 		
