@@ -1,15 +1,25 @@
 import java.util.ArrayList;
 
+/* DataDefault.class acts as a initial data store and utility class for the program.
+ * 
+ * This simulates the game data files, not included in this build.
+ *
+ * 
+ *  */
 
 public class DataDefault {
 
-	static int x = 4;
-	static int y = 2;
+	private static int x = 4; // x dimension 
+	private static int y = 2; // y dimension 
 	
+	// dimension fetch
+	public static int x(){ return x; }
+	public static int y(){ return y; }
+	
+	// return default street info
 	public static ArrayList<Street> defaultStreetInfo(){
 		
 		ArrayList<Street> dstr = new ArrayList<Street>();
-		
 		dstr.add(new Street("Fourth ave",0,0,3,0,1));
 		dstr.add(new Street("Fifth ave",0,1,3,1,-1));
 		dstr.add(new Street("Meow Street",1,0,1,1,0));
@@ -19,10 +29,13 @@ public class DataDefault {
 	}
 	
 	
+	// default city location info
 	public static ArrayList<CityLocation> defaultCityLocInfo(){
 		
+		// return container
 		ArrayList<CityLocation> dloc = new ArrayList<CityLocation>();
 		
+		// individual location data
 		dloc.add(new CityLocation("Outside of City",0,0,false));
 		dloc.add(new CityLocation("Mall",1,0,true));
 		dloc.add(new CityLocation("Bookstore",2,0,true));
@@ -35,9 +48,8 @@ public class DataDefault {
 		return dloc;
 	}
 	
-	public static boolean addSpawnPoints(CityLayout city, ArrayList<CityLocation> loc){
+	public static void addSpawnPoints(CityLayout city, ArrayList<CityLocation> loc){
 		
-		boolean result = true;
 		
 		city.addSpawnPoint(0,0);
 		city.addSpawnPoint(1,0);
@@ -46,10 +58,25 @@ public class DataDefault {
 		city.addSpawnPoint(2,1);
 		city.addSpawnPoint(3,1);
 		
-		return result;
-		
 	}
 	
-	
+
+	// driver print utility
+	public static void printHistory(Driver d){
+		
+		// get history entries from driver
+		ArrayList<HistoryEntry> history = d.getDriverHistory();
+		
+		// print each history out in format folowing example
+		for (HistoryEntry h : history){
+			
+			System.out.println("Driver "+h.driver().getNumber()+" heading from "+h.leaving().name()
+					+" to "+h.destination().name()+" via "+h.street().name()+" @ "+h.date());
+			
+		}
+		
+		
+		
+	}
 	
 }

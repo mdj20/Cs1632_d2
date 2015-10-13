@@ -15,22 +15,20 @@ public class Cs1632_d2 {
 		
 		
 		
-		
-		
-		System.out.println("ret:"+Navigator.getAllPossibleLocations(city.getLocationAt(0, 0), city).size());
-	
 		DataDefault.addSpawnPoints(city, locations);
 		
 		
 		
-		Driver d0 = new Driver(0,city,city.getRandomSpawnPoint(r));
-		Driver d1 = new Driver(1,city,city.getRandomSpawnPoint(r));
-		Driver d2 = new Driver(2,city,city.getRandomSpawnPoint(r));
-		
+
 		ArrayList<Driver> drivers = new ArrayList<Driver>();
-		drivers.add(d0);
-		drivers.add(d1);
-		drivers.add(d2);
+		
+		for (int i = 0 ; i < 50 ; i++){
+			 drivers.add(new Driver(i,city,city.getRandomSpawnPoint(r)));
+		}
+		
+		
+
+
 		
 		
 		boolean running = true;
@@ -39,28 +37,26 @@ public class Cs1632_d2 {
 			
 			for(Driver d : drivers){
 				
-				if (! d.isFinished())
+				if (! d.isFinished()){
 					d.moveOneRand(r);
 				}
+			}
 			
 			running = false;
-			
 			for(Driver d : drivers ){
 				
 				running = ! d.isFinished() || running;
+				
 		
+			}
+			
+			
 		}
-			
-			
 		for(Driver d : drivers){
 			
-			ArrayList<HistoryEntry> entry = d.getDriverHistory();
+			System.out.println();
 			
-			System.out.println(entry.size());
-			
-			for(HistoryEntry he: entry){
-				System.out.println(he.driver().getNumber()+" "+he.destination().name()+" "+he.street().name());
-			}
+			DataDefault.printHistory(d);
 			
 			
 		}
@@ -76,4 +72,4 @@ public class Cs1632_d2 {
 	
 
 	
-}
+
