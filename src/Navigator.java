@@ -262,7 +262,7 @@ public class Navigator {
 					
 					
 			}
-			// 
+			// posative direction
 			if (road.flow() >= 0 && road.x1() > location.x()){
 
 				//staring index one more

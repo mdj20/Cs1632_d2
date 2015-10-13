@@ -11,7 +11,7 @@ public class Driver {
 	private CityLayout city;  /// city info pointer 
 	private ArrayList<HistoryEntry> driverHistory;  // driver history
 	
-	
+	// constructor
 	Driver(int inNum, CityLayout inCity, CityLocation initialLocation){	
 		
 		city = inCity;
@@ -76,6 +76,7 @@ public class Driver {
 		}
 	}
 	
+	// public method
 	public ArrayList<HistoryEntry> getDriverHistory(){
 		return driverHistory;
 	}
@@ -85,15 +86,17 @@ public class Driver {
 		finished = finished || ! current.inCity() ;
 	}
 	
-	
+	// public method
 	public boolean isFinished(){
 		return finished;
 	}
 	
+	// public method
 	public int getNumber(){
 		return num;
 	}
 	
+	// public method
 	public CityLocation current(){
 		return current;
 	}

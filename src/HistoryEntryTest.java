@@ -115,8 +115,6 @@ public class HistoryEntryTest {
 		Date expected[] = new Date[itr];
 		Date actual[] = new Date[itr];
 		
-		int k = 0 ;
-		
 		for(int i = 0 ; i < itr ; i ++){
 		
 			

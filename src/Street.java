@@ -26,8 +26,7 @@ public class Street {
 		flow = inflow;
 	}
 	
-	// constructor used for spawn point history Entry
-	
+	// public methods below
 	public int x(){
 		return x;
 	}

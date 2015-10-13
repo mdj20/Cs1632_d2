@@ -42,8 +42,11 @@ public class CityLayout {
 		return roads;
 	}
 	
+	// checks if loation exists.
 	public boolean locationAt(int x , int y){
 		
+		
+		// null check
 		if (cityMatrix[x][y] != null){
 			return true;
 		}
@@ -53,7 +56,8 @@ public class CityLayout {
 		
 		
 	}
-	
+
+	// gets location at
 	public CityLocation getLocationAt(int x, int y){
 		
 		return cityMatrix[x][y];
@@ -89,14 +93,17 @@ public class CityLayout {
 		
 	}
 	
+	// number of spawn points (used for random value choosing )
 	public int getNumSpawnPoints(){
 		return sLoc.size();
 	}
 	
+	// gets spawn points 
 	public ArrayList<CityLocation> spawnPoints(){
 		return sLoc;
 	}
 	
+	// gets ArrayList<CityLocation> of locations
 	public ArrayList<CityLocation> locationList(){
 		return locationList;
 	}

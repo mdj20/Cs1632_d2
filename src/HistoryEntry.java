@@ -1,15 +1,18 @@
 import java.util.Date;
-
+/*
+ * Contains data for driver history
+ * 
+ */
 
 public class HistoryEntry {
 	
-	private Driver driver;
-	private CityLocation leaving;
-	private Street street;
-	private CityLocation destination;
-	Date date;
+	private Driver driver;  // driver
+	private CityLocation leaving; // leaving locations
+	private Street street; // via street 
+	private CityLocation destination; // destination location
+	Date date; // time etc
 	
-	
+	// Constructor 
 	HistoryEntry(Driver d, CityLocation source, Street s, CityLocation sink, Date dt){
 		driver = d;
 		leaving = source;
@@ -18,6 +21,8 @@ public class HistoryEntry {
 		date = dt;
 	}
 	
+	
+	// public methods below
 	public Driver driver(){
 		return driver;
 	}

@@ -17,9 +17,11 @@ public class NavigatorTest {
 	// Sets up required dependencies
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-	
+		
 		locations = DataDefault.defaultCityLocInfo();
 		streets = DataDefault.defaultStreetInfo();		
+	
+ 
 		testCity = new CityLayout(DataDefault.x(),DataDefault.y(),locations,streets);	
 		DataDefault.addSpawnPoints(testCity, locations);
 		
